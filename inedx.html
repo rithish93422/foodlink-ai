@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodLink AI | Multi-Portal Prototype</title>
+    <link rel="stylesheet" href="styles.css?v=20260323-1">
+</head>
+<body>
+    <div id="loginOverlay" class="login-overlay">
+        <section class="login-shell">
+            <div class="login-layout">
+                <section class="login-story">
+                    <div class="login-hero">
+                        <p class="eyebrow">Role-based access</p>
+                        <h1>Sign in to the right FoodLink AI workspace.</h1>
+                        <p class="lead">
+                            Coordinate hotel surplus, NGO pickups, and FoodLink dispatch operations
+                            from one platform with role-specific dashboards.
+                        </p>
+                    </div>
+
+                    <div class="trust-strip">
+                        <article class="trust-card">
+                            <span>Smart triage</span>
+                            <strong>TensorFlow CNN + XGBoost flow</strong>
+                        </article>
+                        <article class="trust-card">
+                            <span>Dispatch model</span>
+                            <strong>Urgency-first NGO matching</strong>
+                        </article>
+                        <article class="trust-card">
+                            <span>Prototype mode</span>
+                            <strong>GitHub Pages compatible</strong>
+                        </article>
+                    </div>
+
+                    <div class="role-card-grid">
+                        <article class="login-role-card featured">
+                            <p class="eyebrow">Hotel partner</p>
+                            <h2>Hotel Partner</h2>
+                            <p>Publish food batches, upload photos, and run Freshness AI before dispatch.</p>
+                            <ul class="role-list">
+                                <li>Post Surplus intake</li>
+                                <li>Freshness AI result</li>
+                                <li>Publishing workflow</li>
+                            </ul>
+                            <button type="button" class="button button-primary login-trigger" data-role="hotel">Login as Hotel</button>
+                        </article>
+
+                        <article class="login-role-card">
+                            <p class="eyebrow">NGO partner</p>
+                            <h2>NGO Partner</h2>
+                            <p>Review available pickups, view freshness windows, and claim verified collections.</p>
+                            <ul class="role-list">
+                                <li>Available Pickups</li>
+                                <li>Pickup detail card</li>
+                                <li>Claim action</li>
+                            </ul>
+                            <button type="button" class="button button-primary login-trigger" data-role="ngo">Login as NGO</button>
+                        </article>
+
+                        <article class="login-role-card">
+                            <p class="eyebrow">FoodLink admin</p>
+                            <h2>FoodLink Admin</h2>
+                            <p>Manage the global matching engine, dispatch decisions, and NGO verification operations.</p>
+                            <ul class="role-list">
+                                <li>Global Matching Engine</li>
+                                <li>Dispatch oversight</li>
+                                <li>NGO Verification</li>
+                            </ul>
+                            <button type="button" class="button button-primary login-trigger" data-role="admin">Login as Admin</button>
+                        </article>
+                    </div>
+                </section>
+
+                <aside id="mockLoginCard" class="mock-login-card hidden">
+                    <div class="mock-login-top">
+                        <p class="eyebrow">Secure access</p>
+                        <h3 id="loginRoleTitle">Role Login</h3>
+                        <p id="loginRoleHint" class="login-hint">
+                            Continue with your role workspace credentials.
+                        </p>
+                    </div>
+
+                    <div class="login-mini-stats">
+                        <div>
+                            <span>Environment</span>
+                            <strong>Prototype Demo</strong>
+                        </div>
+                        <div>
+                            <span>Session Type</span>
+                            <strong>Mock Authentication</strong>
+                        </div>
+                    </div>
+
+                    <form id="mockLoginForm" class="mock-login-form">
+                        <div class="field-group">
+                            <label for="loginEmail">Email</label>
+                            <input id="loginEmail" type="email" placeholder="name@foodlink.ai" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="loginPassword">Password</label>
+                            <input id="loginPassword" type="password" placeholder="Enter password" required>
+                        </div>
+                        <div class="action-row">
+                            <button type="submit" class="button button-primary">Enter Dashboard</button>
+                            <button type="button" id="cancelLogin" class="button button-secondary">Back</button>
+                        </div>
+                    </form>
+                </aside>
+            </div>
+        </section>
+    </div>
+
+    <main id="appShell" class="shell app-hidden">
+        <header class="app-topbar">
+            <div class="brand-block">
+                <p class="eyebrow">FoodLink AI</p>
+                <h2>Operations Platform</h2>
+            </div>
+            <div class="topbar-actions">
+                <span id="activeRoleBadge" class="pill">Not logged in</span>
+                <span id="sessionStatusChip" class="pill subtle-pill">Demo session</span>
+                <button type="button" id="clearDataButton" class="role-tab">Clear Demo Data</button>
+                <button type="button" id="logoutButton" class="role-tab">Logout</button>
+            </div>
+        </header>
+
+        <section class="app-overview">
+            <div class="masthead-copy">
+                <p class="eyebrow">Authenticated workspace</p>
+                <h1 id="workspaceTitle">Multi-interface demo</h1>
+                <p id="workspaceSubtitle" class="lead">
+                    Role-specific workflows for publishing surplus, dispatching pickups, and verifying NGO operations.
+                </p>
+            </div>
+
+            <div class="platform-strip">
+                <article class="stat-card">
+                    <span>Hotel Portal</span>
+                    <strong>Post surplus</strong>
+                </article>
+                <article class="stat-card">
+                    <span>Organizer Desk</span>
+                    <strong>Match and dispatch</strong>
+                </article>
+                <article class="stat-card">
+                    <span>NGO Board</span>
+                    <strong>Claim and collect</strong>
+                </article>
+            </div>
+        </section>
+
+        <section class="app-layout">
+            <section class="workspace">
+                <div class="workspace-header">
+                    <div class="workspace-meta">
+                        <p class="eyebrow">Live workspace</p>
+                        <h3 id="workspaceSectionTitle">Operations overview</h3>
+                    </div>
+                    <div class="role-tabs">
+                        <span id="workspaceModeChip" class="pill subtle-pill">Ready</span>
+                        <span id="workspaceSignalChip" class="pill subtle-pill">Waiting for activity</span>
+                    </div>
+                </div>
+
+                <section id="hotelPanel" class="panel role-panel">
+                <div class="panel-intro">
+                    <div>
+                        <p class="eyebrow">Hotel interface</p>
+                        <h3>Post Surplus</h3>
+                    </div>
+                    <span class="pill">Dark charcoal + forest green</span>
+                </div>
+
+                <form id="surplusForm" class="surplus-form">
+                    <div class="field-group full-span">
+                        <label for="hotelName">Hotel Name</label>
+                        <input id="hotelName" type="text" placeholder="Grand Horizon Hotel" required>
+                    </div>
+
+                    <div class="field-group full-span">
+                        <label for="photoInput">Photo Upload</label>
+                        <div class="photo-shell">
+                            <button type="button" class="button button-primary" id="cameraButton">Trigger Camera</button>
+                            <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
+                            <p class="helper">Camera input is used as the TensorFlow CNN placeholder signal.</p>
+                            <img id="photoPreview" class="photo-preview hidden" alt="Food preview">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="foodType">Food Type</label>
+                        <select id="foodType" required>
+                            <option>Cooked Rice</option>
+                            <option>Curry</option>
+                            <option>Bread</option>
+                            <option>Dairy</option>
+                            <option>Fruits</option>
+                            <option>Sealed Packets</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="quantityKg">Quantity (kg)</label>
+                        <input id="quantityKg" type="number" min="0.1" step="0.1" placeholder="12.5" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="cookTime">Cook Time</label>
+                        <input id="cookTime" type="time" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Storage Condition</label>
+                        <div class="chip-row" id="storageChips">
+                            <button type="button" class="chip active" data-storage="Room Temperature">Room Temperature</button>
+                            <button type="button" class="chip" data-storage="Refrigerated">Refrigerated</button>
+                            <button type="button" class="chip" data-storage="Frozen">Frozen</button>
+                        </div>
+                    </div>
+
+                    <div class="action-row full-span">
+                        <button type="submit" class="button button-primary">Analyze and Publish</button>
+                        <button type="reset" class="button button-secondary">Reset Form</button>
+                    </div>
+                </form>
+
+                <section id="resultCard" class="result-card hidden" aria-live="polite">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Hotel result</p>
+                            <h3>Consensus Shelf Life</h3>
+                        </div>
+                        <span id="urgencyBadge" class="pill pill-urgency">Green</span>
+                    </div>
+
+                    <div class="metric-grid">
+                        <article class="metric-box">
+                            <span>Consensus</span>
+                            <strong id="consensusShelfLife">0.0 hrs</strong>
+                        </article>
+                        <article class="metric-box">
+                            <span>XGBoost</span>
+                            <strong id="xgBoostValue">0.0 hrs</strong>
+                        </article>
+                        <article class="metric-box">
+                            <span>TensorFlow CNN</span>
+                            <strong id="tensorFlowValue">0.0 hrs</strong>
+                        </article>
+                    </div>
+
+                    <div class="notes-box">
+                        <h4>AI Notes</h4>
+                        <ul id="notesList"></ul>
+                    </div>
+                </section>
+                </section>
+
+                <section id="ngoPanel" class="panel role-panel">
+                <div class="panel-intro">
+                    <div>
+                        <p class="eyebrow">NGO interface</p>
+                        <h3>Available Pickups</h3>
+                    </div>
+                    <span class="pill">Claim-ready inventory</span>
+                </div>
+
+                <div class="dashboard-grid">
+                    <article class="metric-box">
+                        <span>Available Pickups</span>
+                        <strong id="ngoAvailableCount">0</strong>
+                    </article>
+                    <article class="metric-box">
+                        <span>Recommended Window</span>
+                        <strong id="ngoPickupWindow">Awaiting post</strong>
+                    </article>
+                    <article class="metric-box">
+                        <span>Collection Status</span>
+                        <strong id="ngoStatus">Pending</strong>
+                    </article>
+                </div>
+
+                <article class="list-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Pickup details</p>
+                            <h3>Claim Tool</h3>
+                        </div>
+                        <button type="button" id="claimButton" class="button button-secondary" disabled>Claim Pickup</button>
+                    </div>
+                    <div id="ngoFeed" class="feed-empty">
+                        No food listing yet. Once a hotel publishes a surplus batch, NGOs can claim it here.
+                    </div>
+                </article>
+
+                <article class="list-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Assigned delivery</p>
+                            <h3>Assigned Order</h3>
+                        </div>
+                        <button type="button" id="receivedButton" class="button button-primary" disabled>Received Delivery</button>
+                    </div>
+                    <div id="assignedFeed" class="feed-empty">
+                        No assigned delivery yet. Claim a verified pickup to move it here.
+                    </div>
+                </article>
+
+                <article class="list-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Completed delivery</p>
+                            <h3>Delivery History</h3>
+                        </div>
+                    </div>
+                    <div id="ngoHistoryFeed" class="feed-empty">
+                        Completed NGO deliveries will be saved here.
+                    </div>
+                </article>
+                </section>
+
+                <section id="adminPanel" class="panel role-panel">
+                <div class="panel-intro">
+                    <div>
+                        <p class="eyebrow">FoodLink AI organizer</p>
+                        <h3>Global Matching Engine</h3>
+                    </div>
+                    <span class="pill">Live routing prototype</span>
+                </div>
+
+                <div class="dashboard-grid">
+                    <article class="metric-box">
+                        <span>Open Listings</span>
+                        <strong id="organizerOpenCount">0</strong>
+                    </article>
+                    <article class="metric-box">
+                        <span>Verification Queue</span>
+                        <strong id="organizerPriority">0 pending</strong>
+                    </article>
+                    <article class="metric-box">
+                        <span>Suggested NGO</span>
+                        <strong id="organizerSuggestedNgo">Awaiting post</strong>
+                    </article>
+                </div>
+
+                <article class="list-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Verification desk</p>
+                            <h3>Pending Organizer Approval</h3>
+                        </div>
+                    </div>
+                    <div id="organizerFeed" class="feed-empty">
+                        Publish a hotel surplus item to send it for organizer verification.
+                    </div>
+                </article>
+
+                <article class="list-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Admin controls</p>
+                            <h3>NGO Verification</h3>
+                        </div>
+                    </div>
+                    <div class="feed-card">
+                        <div class="feed-grid">
+                            <div>
+                                <span>Verification Queue</span>
+                                <strong>12 NGOs pending</strong>
+                            </div>
+                            <div>
+                                <span>High-trust Partners</span>
+                                <strong>48 verified</strong>
+                            </div>
+                            <div>
+                                <span>Region Coverage</span>
+                                <strong>North, Central, East</strong>
+                            </div>
+                            <div>
+                                <span>Current Rule</span>
+                                <strong>Match by urgency + proximity</strong>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="list-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Delivery history</p>
+                            <h3>Completed Orders</h3>
+                        </div>
+                    </div>
+                    <div id="adminHistoryFeed" class="feed-empty">
+                        Completed deliveries will appear here after NGO confirmation.
+                    </div>
+                </article>
+                </section>
+            </section>
+
+            <aside class="activity-rail">
+                <article class="rail-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Session</p>
+                            <h3>Role Snapshot</h3>
+                        </div>
+                    </div>
+                    <div class="rail-metrics">
+                        <div>
+                            <span>Current Role</span>
+                            <strong id="railRole">Not logged in</strong>
+                        </div>
+                        <div>
+                            <span>Primary Tool</span>
+                            <strong id="railPrimaryTool">Select a role</strong>
+                        </div>
+                        <div>
+                            <span>Live Signal</span>
+                            <strong id="railLiveSignal">Idle</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="rail-card">
+                    <div class="panel-intro">
+                        <div>
+                            <p class="eyebrow">Recent activity</p>
+                            <h3>Activity Feed</h3>
+                        </div>
+                    </div>
+                    <div id="activityFeed" class="activity-feed">
+                        <div class="activity-item">
+                            <span class="activity-tag">System</span>
+                            <strong>Awaiting login</strong>
+                            <p>Choose a role to enter the FoodLink AI platform.</p>
+                        </div>
+                    </div>
+                </article>
+            </aside>
+        </section>
+    </main>
+
+    <script src="script.js?v=20260323-1"></script>
+</body>
+</html>
